@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="stylesheet" href="lib/css/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <meta charset="UTF-8">
+    <title>SingUp</title>
+
+</head>
+
+<style>
+    body {
+        background-color: lightgrey;
+
+    }
+
+    .text-muted{
+        text-align: center;
+    }
+</style>
+
+<body>
+
+<div class="top-content">
+
+    <div class="inner-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3 text">
+                    <h1><strong>Nexus</strong> Social</h1>
+                    <div class="description">
+                        <p>
+                            <strong>Welcome </strong> to Nexus Social a place where new friendships begin.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3 form-box">
+                    <div class="form-top">
+                        <div class="form-top-left">
+                            <h3>Register Below</h3>
+                            <p>Enter the username and password you wish to register with:</p>
+                        </div>
+                        <div class="form-top-right">
+                            <i class="fa fa-key"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="inputFirstName">Firstname</label>
+                        <input type="firstName" class="form-control" id="inputFirstName" placeholder="FistName">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="inputLastName">Last name</label>
+                        <input type="lastName" class="form-control" id="inputLastName" placeholder="LastName">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="inputPassword">Password</label>
+                        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="inputEmail">Email</label>
+                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="inputGender">Gender (m/f)</label>
+                        <input type="gender" class="form-control" id="inputGender" placeholder="Gender">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="inputMajor">Major</label>
+                        <input type="major" class="form-control" id="inputMajor" placeholder="Major">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="inputSemester">Current Semester 1-6 </label>
+                        <input type="semester" class="form-control" id="inputSemester" placeholder="Semester">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="inputDescription">Short Description</label>
+                        <textarea rows="4" cols="50" id="inputDescription"></textarea>
+                    </div>
+
+            <button style="margin-bottom: 40px" class="btn btn-default" id="SignUp-button">Create user</button>
+                    <button style="margin-bottom: 40px" class="btn btn-default" id="alreadyUser-button">Already a user? Click here to sign in.</button>
+        </div>
+    </div>
+        </div>
+
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">2017 © All rights reserved - Liocouras A/S.</p>
+    </div>
+</footer>
+
+<script src="lib/js/jquery-3.2.1.js"></script>
+<script src="lib/js/bootstrap.js"></script>
+<script src="js/sdk.js"></script>
+<script src="js/login.js"></script>
+
+</body>
+</html>
