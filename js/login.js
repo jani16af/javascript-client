@@ -16,7 +16,7 @@ $("#login-button").click(() => {
             console.log(err, data);
             console.log("BAd stuff happened")
         } else {
-            window.location.href = "index.html";
+            window.location.href = "../Html/index.html";
         }
     });
 
@@ -24,6 +24,6 @@ $("#login-button").click(() => {
 
 $("#Register-button").click(() => {
 
-    window.location.href = "SignUp.html";
+    window.location.href = "../Html/SignUp.html";
 });
 });

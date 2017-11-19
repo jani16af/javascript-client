@@ -78,7 +78,7 @@ const SDK = {
         logOut: () => {
             SDK.Storage.remove("token");
             window.alert("lol")
-            window.location.href = "index.html";
+            window.location.href = "../Html/index.html";
         },
 
         login: (password, email, cb) => {

@@ -18,12 +18,12 @@ $(document).ready(() => {
         });
 
         window.alert("Bruger oprettet!");
-        window.location.href = "login.html";
+        window.location.href = "../Html/login.html";
 
     });
 
     $("#alreadyUser-button").click(() => {
 
-        window.location.href = "login.html";
+        window.location.href = "../Html/login.html";
     });
 });
