@@ -2,12 +2,17 @@ const SDK = {
     serverURL: "http://localhost:8080/api",
     request: (options, cb) => { //Vigtigste funktioner, der laver en AJAX request. Kan sende et request, asynkront.
 
-        let token = {"AUTHORIZATION": localStorage.getItem("token")}
+        let headers = {};
+        if (options.headers) {
+            Object.keys(options.headers).forEach((h) => {
+                headers[h] = (typeof options.headers[h] === 'object') ? JSON.stringify(options.headers[h]) : options.headers[h];
+            });
+        }
 
         $.ajax({
             url: SDK.serverURL + options.url,
             method: options.method,
-            headers: token,
+            headers: headers,
             contentType: "application/json",
             dataType: "json",
             data: JSON.stringify(options.data),
@@ -22,23 +27,36 @@ const SDK = {
 
     },
 
-
-
-
+    Post: {},
     User: {
+
+        myInfo: (cb) =>{
+            SDK.request({
+                    method: "GET",
+                    url: "/users"
+
+
+                },
+                (err, data) =>{
+
+                    SDK.Storage.persist("token", data);
+
+                },
+                cb)
+        },
 
         loadNav: (cb) => {
             $("#nav-container").load("nav.html", () => {
                 const user = SDK.User.current();
                 if (currentUser) {
                     $(".navbar-right").html(`
-            <li><a href="profile.html">Your Events</a></li>
+            <li><a href="profile.html">Profile</a></li>
             <li><a href="#" id="logout-link">Logout</a></li>
           `);
-                } else {
+                /*} else {
                     $(".navbar-right").html(`
             <li><a href="login.html">Log-in <span class="sr-only">(current)</span></a></li>
-          `);
+          `);*/
                 }
                 $("#logout-link").click(() => SDK.User.logOut());
                 cb && cb();
@@ -78,7 +96,7 @@ const SDK = {
         logOut: () => {
             SDK.Storage.remove("token");
             window.alert("lol")
-            window.location.href = "../Html/index.html";
+            window.location.href = "../Html/HomePage.html";
         },
 
         login: (password, email, cb) => {
@@ -99,13 +117,20 @@ const SDK = {
                 // SDK.Storage.persist("userId", data.userId);
                 // SDK.Storage.persist("user", data.user);
 
+                let token = data;
+
+                    var base64Url = token.split('.')[0];
+                    var base64 = base64Url.replace('-','+').replace('_','/');
+                console.log(JSON.parse(window.atob(base64)));
+
+                SDK.Storage.persist("userId", JSON.parse(window.atob(base64)).kid);
                 SDK.Storage.persist("token", data);
                 cb(null, data);
             });
         },
 
 
-        Event: {
+        /*Event: {
             addEvent: (event) => {
                 let basket = SDK.Storage.load("basket")
 
@@ -132,7 +157,7 @@ const SDK = {
                     SDK.Storage.persist("basket", basket);
                 }
             }
-        },
+        },*/
 
 
         Storage:
@@ -185,3 +210,4 @@ const SDK = {
                 }
             }
     },
+}

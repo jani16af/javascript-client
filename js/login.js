@@ -1,6 +1,5 @@
 $(document).ready(() => {
 
-SDK.User.loadNav();
 
 $("#login-button").click(() => {
 
@@ -16,7 +15,7 @@ $("#login-button").click(() => {
             console.log(err, data);
             console.log("BAd stuff happened")
         } else {
-            window.location.href = "../Html/index.html";
+            window.location.href = "../Html/HomePage.html";
         }
     });
 

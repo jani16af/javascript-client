@@ -2,7 +2,9 @@ $(document).ready(() => {
 
     SDK.User.loadNav();
 
-    $("#createuser-button").click(() => {
+    $("#SignUp").click(() => {
+
+        console.log("what")
 
         const firstName = $("#inputFirstName").val();
         const lastName = $("#inputLastName").val();
@@ -13,17 +15,17 @@ $(document).ready(() => {
         const semester = $("#inputSemester").val();
         const description = $("#inputDescription").val();
 
-        SDK.User.createUser(password, firstName, lastName, email, description, gender, major, semester, (err, data) => {
+        SDK.User.createUser(password, firstName, lastName, email, gender, major, semester, description, (err, data) => {
             console.log(err, data);
         });
 
         window.alert("Bruger oprettet!");
-        window.location.href = "../Html/login.html";
+        window.location.href = "../Html/index.html";
 
     });
 
-    $("#alreadyUser-button").click(() => {
+    $("#alreadyUser").click(() => {
 
-        window.location.href = "../Html/login.html";
+        window.location.href = "../Html/Index.html";
     });
 });
