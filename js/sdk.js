@@ -27,40 +27,32 @@ const SDK = {
 
     },
 
-    Post: {},
+
     User: {
 
         myInfo: (cb) =>{
             SDK.request({
                     method: "GET",
-                    url: "/users"
-
-
-                },
-                (err, data) =>{
-
-                    SDK.Storage.persist("token", data);
+                    url: "/users",
+                    headers: {
+                        Authorization: "Bearer " + SDK.Storage.load("token")
+                    }
 
                 },
-                cb)
+                cb);
         },
 
-        loadNav: (cb) => {
-            $("#nav-container").load("nav.html", () => {
-                const user = SDK.User.current();
-                if (currentUser) {
-                    $(".navbar-right").html(`
-            <li><a href="profile.html">Profile</a></li>
-            <li><a href="#" id="logout-link">Logout</a></li>
-          `);
-                /*} else {
-                    $(".navbar-right").html(`
-            <li><a href="login.html">Log-in <span class="sr-only">(current)</span></a></li>
-          `);*/
-                }
-                $("#logout-link").click(() => SDK.User.logOut());
-                cb && cb();
-            });
+        findUser: (cb) => {
+            SDK.request({
+                    method: "GET",
+                    url: "/users/" + SDK.Storage.load("postOwnerId"),
+                    headers: {
+                        Authorization: "Bearer " + SDK.Storage.load("token")
+                    }
+
+                },
+                cb);
+
         },
 
 
@@ -84,7 +76,10 @@ const SDK = {
         findAll: (cb) => {
             SDK.request({
                     method: "GET",
-                    url: "/users"
+                    url: "/users",
+                    headers: {
+                        Authorization: "Bearer " + SDK.Storage.load("token")
+                    }
                 },
 
                 cb);
@@ -95,8 +90,9 @@ const SDK = {
         },
         logOut: () => {
             SDK.Storage.remove("token");
-            window.alert("lol")
-            window.location.href = "../Html/HomePage.html";
+            SDK.Storage.remove("userId");
+            SDK.Storage.remove("user");
+            window.location.href = "../Html/index.html";
         },
 
         login: (password, email, cb) => {
@@ -106,58 +102,136 @@ const SDK = {
                     email: email
                 },
                 url: "/auth",
-                method: "POST"
+                method: "POST",
+                headers: {
+                    Authorization: "Bearer " + SDK.Storage.load("token")
+                }
             }, (err, data) => {
-
-
-                //If login fails
                 if (err) return cb(err);
-                debugger;
-                // SDK.Storage.persist("tokenId", data.id);
-                // SDK.Storage.persist("userId", data.userId);
-                // SDK.Storage.persist("user", data.user);
 
+                // https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript
                 let token = data;
 
-                    var base64Url = token.split('.')[0];
-                    var base64 = base64Url.replace('-','+').replace('_','/');
+                var base64Url = token.split('.')[0];
+                var base64 = base64Url.replace('-', '+').replace('_', '/');
                 console.log(JSON.parse(window.atob(base64)));
 
                 SDK.Storage.persist("userId", JSON.parse(window.atob(base64)).kid);
                 SDK.Storage.persist("token", data);
+
+
                 cb(null, data);
-            });
+
+            }, cb);
         },
 
+        loadNav: (cb) => {
+            $("#nav-container").load("nav.html", () => {
+                const currentUser = SDK.User.current();
 
-        /*Event: {
-            addEvent: (event) => {
-                let basket = SDK.Storage.load("basket")
+                $("#logout-link").click(() => SDK.User.logOut());
+                cb && cb();
+            });
+        }
+    },
 
-                //If something has been added to your basket before do the following:
+    Post: {
 
-                if (!basket) {
-                    return SDK.Storage.persist("basket", [{
-                        count: 1,
-                        event: event
-                    }]);
+        createPost: (ownerId, content, eventId, cb) => {
+            SDK.request({
+                data: {
+                    owner: ownerId,
+                    content: content,
+                    event: eventId,
+
+                },
+                url: "/posts",
+                method: "POST",
+                headers: {
+                    Authorization: "Bearer " + SDK.Storage.load("token")
                 }
-                //Does the event already exist?
-                let foundEvent = basket.find(b => b.event.id === event.id);
-                if (foundEvent) {
-                    let i = basket.indexOf(foundEvent);
-                    basket[i].count++;
-                else
-                    {
-                        basket.push({
-                            count: 1,
-                            event: event
-                        });
-                    }
-                    SDK.Storage.persist("basket", basket);
+
+            }, cb)
+        },
+
+        findComments: (cb) => {
+            SDK.request({
+                url: "/posts/" + SDK.Storage.load("chosenPostId"),
+                headers: {
+                    Authorization: "Bearer " + SDK.Storage.load("token")
                 }
-            }
-        },*/
+            }, cb)
+        },
+
+        createComment: (firstName, ownerId, content, parentId, cb) => {
+            SDK.request({
+                data: {
+                    owner: ownerId,
+                    content: content,
+                    parent: parentId,
+                },
+                url: "/posts",
+                method: "POST",
+                headers: {
+                    Authorization: "Bearer " + SDK.Storage.load("token")
+                }
+            }, cb)
+        },
+
+    },
+
+    Event: {
+        createEvent: (owner_id, title, startDate, endDate, description, cb) => {
+            SDK.request({
+                data: {
+                    owner_id: owner_id,
+                    title: title,
+                    startDate: startDate,
+                    endDate: endDate,
+                    description: description,
+                },
+                url: "/events",
+                method: "POST",
+                headers: {
+                    Authorization: "Bearer " + SDK.Storage.load("token")
+                }
+            }, cb)
+        },
+
+        findEvent: (cb) => {
+            SDK.request({
+                url: "/events/" + SDK.Storage.load("chosenEventId"),
+                method: "GET",
+                headers: {
+                    Authorization: "Bearer " + SDK.Storage.load("token")
+                },
+            }, cb)
+        },
+
+        findAllEvents: (cb) => {
+            SDK.request({
+                url: "/events",
+                method: "GET",
+                headers: {
+                    Authorization: "Bearer " + SDK.Storage.load("token")
+                },
+            }, cb)
+        },
+
+        fineMineEvents: (cb, userId) => {
+            SDK.request({
+                data:{
+                  userId: userId,
+                },
+                url: "/events/" + SDK.User.current().userId + "/subscribe",
+                method: "GET",
+                headers: {
+                    Authorization: "Bearer " + SDK.Storage.load("token")
+                },
+            }, cb)
+}
+    },
+
 
 
         Storage:
@@ -209,5 +283,6 @@ const SDK = {
                     return decrypt;
                 }
             }
-    },
-}
+
+};
+

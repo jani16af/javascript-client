@@ -1,45 +1,38 @@
 $(document).ready(() => {
 
-    window.alert("HEJSA")
-    const $userlist = $("#user-list");
+
+    SDK.User.loadNav();
+
+
+    const $listOfUsers = $("#list-of-users");
+
+
 
     SDK.User.findAll((err, users) => {
         users.forEach((user) => {
 
-            const userHtml = `
-        <div class="col-lg-4 book-container">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">${user.firstName}</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="col-lg-4">
-                    </div>
-                    <div class="col-lg-8">
-                      <dl>
-                        <dt>Subtitle</dt>
-                        <dd>${user.gender}</dd>
-                        <dt>Publisher</dt>
-                        <dd>${user.major}</dd>
-                        <dt>ISBN</dt>
-                        <dd>${user.semester}</dd>
-                      </dl>
-                    </div>
-                </div>
-                <div class="panel-footer">
-                    <div class="row">
-                        <div class="col-lg-4 price-label">
-                            <p>Kr. <span class="price-amount">${user.description}</span></p>
-                        </div>
-                    </div>
-                </div>
+
+            $listOfUsers.append(`
+<div class="row">
+        <div class="co-lg-6">
+            <div class="user-list">
+            <table>
+            <tr>
+                <td>${user.firstName}</td>
+                <td>${user.lastName}</td>
+                <td>${user.email}</td>
+                <td>${user.gender}</td>
+                <td>${user.major}</td>
+                <td>${user.semester}</td>
+                <td>${user.description}</td>
+            </tr>
+            </table>
+            <div id="load-test"></div>
             </div>
-        </div>`;
+                `
+            );
+        });
 
-        })
-
-
-
-    })
+    });
 
 });

@@ -2,28 +2,14 @@ $(document).ready(() => {
 
   SDK.User.loadNav();
   const currentUser = SDK.User.current();
-  const $basketTbody = $("#basket-tbody");
+  const $myeventlist = $("#my-events-list");
 
-  $(".page-header").html(`
+  $(".main-header").html(`
     <h1>Hi, ${currentUser.firstName} ${currentUser.lastName}</h1>
   `);
 
-  $(".img-container").html(`
-    <img src="${currentUser.avatarUrl}" height="150"/>
-  `);
 
-  $(".profile-info").html(`
-    <dl>
-        <dt>Name</dt>
-        <dd>${currentUser.firstName} ${currentUser.lastName}</dd>
-        <dt>Email</dt>
-        <dd>${currentUser.email}</dd>
-        <dt>ID</dt>
-        <dd>${currentUser.id}</dd>
-     </dl>
-  `);
-
-  SDK.Order.findMine((err, orders) => {
+  SDK.Event.fineMineEvents((err, Event) => {
     if(err) throw err;
     orders.forEach(order => {
       $basketTbody.append(`

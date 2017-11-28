@@ -4,7 +4,7 @@ $(document).ready(() => {
 
     $("#SignUp").click(() => {
 
-        console.log("what")
+
 
         const firstName = $("#inputFirstName").val();
         const lastName = $("#inputLastName").val();
@@ -15,12 +15,17 @@ $(document).ready(() => {
         const semester = $("#inputSemester").val();
         const description = $("#inputDescription").val();
 
-        SDK.User.createUser(password, firstName, lastName, email, gender, major, semester, description, (err, data) => {
-            console.log(err, data);
-        });
+        SDK.User.createUser(password, firstName, lastName, email, description, gender, major, semester, (err, data) => {
+            if (err && err.xhr.status === 401) {
+                $(".form-group").addClass("has-error");
+            }else{
 
-        window.alert("Bruger oprettet!");
-        window.location.href = "../Html/index.html";
+                window.alert("Your user is now created. You will now be able to login!");
+                window.location.href = "../Html/index.html";
+
+            }
+
+        });
 
     });
 
