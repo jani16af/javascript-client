@@ -30,17 +30,6 @@ const SDK = {
 
     User: {
 
-        myInfo: (cb) =>{
-            SDK.request({
-                    method: "GET",
-                    url: "/users",
-                    headers: {
-                        Authorization: "Bearer " + SDK.Storage.load("token")
-                    }
-
-                },
-                cb);
-        },
 
         findUser: (cb) => {
             SDK.request({
@@ -56,16 +45,16 @@ const SDK = {
         },
 
 
-        createUser: (password, firstName, lastName, email, description, gender, major, semester, cb) => {
+        createUser: (firstName, lastName, email, description, gender, major, password, semester, cb) => {
             SDK.request({
                 data: {
                     firstName: firstName,
                     lastName: lastName,
-                    password: password,
                     email: email,
                     gender: gender,
                     major: major,
                     semester: semester,
+                    password: password,
                     description: description
                 },
                 url: "/users",
@@ -86,13 +75,13 @@ const SDK = {
         },
 
         current: () => {
-            return SDK.Storage.load("user");
+            return SDK.Storage.load("token");
         },
         logOut: () => {
             SDK.Storage.remove("token");
             SDK.Storage.remove("userId");
             SDK.Storage.remove("user");
-            window.location.href = "../Html/index.html";
+            window.location.href = "../src/Html/index.html";
         },
 
         login: (password, email, cb) => {
@@ -116,8 +105,8 @@ const SDK = {
                 var base64 = base64Url.replace('-', '+').replace('_', '/');
                 console.log(JSON.parse(window.atob(base64)));
 
-                SDK.Storage.persist("userId", JSON.parse(window.atob(base64)).kid);
-                SDK.Storage.persist("token", data);
+                localStorage.setItem("userId", JSON.parse(window.atob(base64)).kid);
+                localStorage.setItem("token", data);
 
 
                 cb(null, data);
@@ -129,9 +118,21 @@ const SDK = {
             $("#nav-container").load("nav.html", () => {
                 const currentUser = SDK.User.current();
 
+
+                if (currentUser) {
+                    $(".navbar-right").html(`
+            <li><a href="HomePage.html" id="logout-link">Logout</a></li>
+          `);
+                } else {
+                    $(".navbar-right").html(`
+            <li><a href="index.html">Login <span class="sr-only">(current)</span></a></li>
+          `);
+                }
+
+
                 $("#logout-link").click(() => SDK.User.logOut());
                 cb && cb();
-            });
+            })
         }
     },
 

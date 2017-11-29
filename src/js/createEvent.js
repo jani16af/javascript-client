@@ -18,7 +18,7 @@ $(document).ready(() => {
             }else{
 
                 window.alert("Event created!");
-                window.location.href = "../Html/Events.html";
+                window.location.href = "../src/Html/Events.html";
 
             }
 
