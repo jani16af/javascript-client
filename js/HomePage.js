@@ -4,6 +4,10 @@ $(document).ready(() => {
   const currentUser = SDK.User.current();
   const $myeventlist = $("#my-events-list");
 
+  $(".main-header").html(`
+    <h1>Hi, ${currentUser.firstName} ${currentUser.lastName}</h1>
+  `);
+
 
   SDK.Event.fineMineEvents((err, Event) => {
     if(err) throw err;

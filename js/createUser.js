@@ -8,23 +8,20 @@ $(document).ready(() => {
 
         const firstName = $("#inputFirstName").val();
         const lastName = $("#inputLastName").val();
+        const password = $("#inputPassword").val();
         const email = $("#inputEmail").val();
         const gender = $("#inputGender").val();
         const major = $("#inputMajor").val();
         const semester = $("#inputSemester").val();
-        const password = $("#inputPassword").val();
         const description = $("#inputDescription").val();
 
-        SDK.User.createUser(firstName, lastName, email, description, gender, major, password, semester, (err, data) => {
-            console.log(err, data);
-
-
+        SDK.User.createUser(password, firstName, lastName, email, description, gender, major, semester, (err, data) => {
             if (err && err.xhr.status === 401) {
                 $(".form-group").addClass("has-error");
             }else{
 
                 window.alert("Your user is now created. You will now be able to login!");
-                window.location.href = "../src/Html/index.html";
+                window.location.href = "../Html/index.html";
 
             }
 
@@ -34,6 +31,6 @@ $(document).ready(() => {
 
     $("#alreadyUser").click(() => {
 
-        window.location.href = "../src/Html/Index.html";
+        window.location.href = "../Html/Index.html";
     });
 });
