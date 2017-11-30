@@ -92,7 +92,7 @@ const SDK = {
         },
 
         current: () => {
-            return SDK.Storage.load("token");
+            return SDK.Storage.load("userId");
         },
         logOut: () => {
             SDK.Storage.remove("token");

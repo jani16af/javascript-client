@@ -20,8 +20,11 @@ $(document).ready(() => {
                 $(".form-group").addClass("has-error");
                 window.alert("Some of the information you have put in is in the wrong format or missing")
 
-            }else if (err) {
-                console.log("Something went wrong")
+            }else if (err && err.xhr.status === 401) {
+                $(".form-group").addClass("has-error");
+                window.alert("Some of the information you have put in is in the wrong format or missing")
+
+
 
             }else{
 

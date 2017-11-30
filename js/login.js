@@ -8,14 +8,17 @@ $("#login-button").click(() => {
     const password = $("#inputPassword").val();
 
     SDK.User.login(password, email, (err, data) => {
-        if (err && err.xhr.status === 401) {
+        if (err && err.xhr.status === 500) {
 
             $(".form-group").addClass("has-error");
+            window.alert("Wrong username or password")
         }
         else if (err) {
             console.log(err, data);
             console.log("BAd stuff happened")
             window.alert("Wrong username or password")
+
+
         } else {
             SDK.Event.fineMineEvents((err) => {
                 if (err) console.log('error', err);
@@ -26,11 +29,12 @@ $("#login-button").click(() => {
             });
         }
 
+        $("#Register-button").click(() => {
+
+            window.location.href = "../Html/SignUp.html";
 });
 
-$("#Register-button").click(() => {
 
-    window.location.href = "../Html/SignUp.html";
 });
 });
 });

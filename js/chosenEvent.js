@@ -14,6 +14,8 @@ $(document).ready(() => {
             
            </div>`;
 
+
+
         $specificEvent.append(specificEventHtml);
 
         const eventPosts = event.posts;
@@ -84,13 +86,16 @@ $(document).ready(() => {
 
     });
 
-    $("#return-button").click(function () {
+    $("#return-buttonBottom").click(function () {
 
 
-        window.location.href = "Events.html";
+            window.location.href = "Events.html";
 
 
-    });
+
+
+
+        });
 
     $("#comment-modal").on("shown.bs.modal", () => {
 
