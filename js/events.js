@@ -21,13 +21,13 @@ $(document).ready(() => {
                 <div class="panel-body">
                     <div class="col-md-1-8">
                       <dl>
-                      <dt>Oprettet</dt>
+                      <dt>Created</dt>
                       <dd>${event.created}</dd>
-                        <dt>Startdato</dt>
+                        <dt>Start date</dt>
                         <dd>${event.startDate}</dd>
-                        <dt>Slutdato</dt>
+                        <dt>End date</dt>
                         <dd>${event.endDate}</dd>
-                        <dt>Beskrivelse</dt>
+                        <dt>Description</dt>
                         <dd>${event.description}</dd>
                       </dl>
                     </div>

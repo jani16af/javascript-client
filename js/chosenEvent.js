@@ -37,9 +37,9 @@ $(document).ready(() => {
                 <div class="panel-body">
                     <div class="col-lg-12">
                       <dl>
-                      <dt>Oprettet</dt>
+                      <dt>Created</dt>
                       <dd>${eventPosts.created}</dd>
-                      <dt>Indhold</dt>
+                      <dt>Post</dt>
                       <dd>${eventPosts.content}</dd>
                       </dl>
                     </div>
@@ -60,6 +60,7 @@ $(document).ready(() => {
             $("#comment-modal").modal("toggle");
             const postId = $(this).data("post-comments");
             SDK.Storage.persist("chosenPostId", postId);
+            refresh();
 
         });
 
@@ -86,7 +87,7 @@ $(document).ready(() => {
     $("#return-button").click(function () {
 
 
-        window.location.href = "events.html";
+        window.location.href = "Events.html";
 
 
     });

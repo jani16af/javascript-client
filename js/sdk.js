@@ -30,7 +30,7 @@ const SDK = {
 
     User: {
 
-        myInfo: (cb) =>{
+        myInfo: (cb) => {
             SDK.request({
                     method: "GET",
                     url: "/users",
@@ -70,7 +70,13 @@ const SDK = {
                 },
                 url: "/users",
                 method: "POST"
-            }, cb)
+            }, (err, data) => {
+
+                if (err) return cb(err);
+
+                cb(null, data);
+
+            }, cb);
         },
 
         findAll: (cb) => {
@@ -86,12 +92,15 @@ const SDK = {
         },
 
         current: () => {
-            return SDK.Storage.load("user");
+            return SDK.Storage.load("token");
         },
         logOut: () => {
             SDK.Storage.remove("token");
             SDK.Storage.remove("userId");
             SDK.Storage.remove("user");
+            SDK.Storage.remove("postOwnerId");
+            SDK.Storage.remove("chosenPostId");
+            SDK.Storage.remove("chosenEventId");
             window.location.href = "../Html/index.html";
         },
 
@@ -127,12 +136,29 @@ const SDK = {
 
         loadNav: (cb) => {
             $("#nav-container").load("nav.html", () => {
+
+
                 const currentUser = SDK.User.current();
 
-                $("#logout-link").click(() => SDK.User.logOut());
+
+                if (currentUser) {
+                    $(".navbar-right").html(`
+            <li><a href="Index.html" id="logout-link">Log out</a></li>
+          `);
+                } else {
+                    $(".navbar-right").html(`
+            <li><a href="Index.html">Login <span class="sr-only">(current)</span></a></li>
+          `);
+                }
+                $("#logout-link").click(() => {
+                    SDK.User.logOut()
+
+
+                });
                 cb && cb();
-            });
-        }
+
+            })
+        },
     },
 
     Post: {
@@ -163,7 +189,7 @@ const SDK = {
             }, cb)
         },
 
-        createComment: (firstName, ownerId, content, parentId, cb) => {
+        createComment: (ownerId, content, parentId, cb) => {
             SDK.request({
                 data: {
                     owner: ownerId,
@@ -223,7 +249,7 @@ const SDK = {
                 data:{
                   userId: userId,
                 },
-                url: "/events/" + SDK.User.current().userId + "/subscribe",
+                url: "/events/" + SDK.User.current() + "/subscribe",
                 method: "GET",
                 headers: {
                     Authorization: "Bearer " + SDK.Storage.load("token")
@@ -236,7 +262,7 @@ const SDK = {
 
         Storage:
             {
-                prefix: "CafeNexusSDK",
+                prefix: "NexusSDK",
                 persist:
                     (key, value) => {
                         window.localStorage.setItem(SDK.Storage.prefix + key, (typeof value === 'object') ? JSON.stringify(value) : value)

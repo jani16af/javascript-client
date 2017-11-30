@@ -15,15 +15,22 @@ $("#login-button").click(() => {
         else if (err) {
             console.log(err, data);
             console.log("BAd stuff happened")
+            window.alert("Wrong username or password")
         } else {
-            window.location.href = "../Html/HomePage.html";
+            SDK.Event.fineMineEvents((err) => {
+                if (err) console.log('error', err);
+
+
+                window.location.href = "../Html/HomePage.html";
+
+            });
         }
-    });
 
 });
 
 $("#Register-button").click(() => {
 
     window.location.href = "../Html/SignUp.html";
+});
 });
 });

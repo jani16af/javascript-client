@@ -11,26 +11,27 @@ $(document).ready(() => {
         const owner_id = SDK.User.current();
 
         SDK.Event.createEvent(owner_id, title, startDate, endDate, description, (err) => {
-            if (err && err.xhr.status === 401) {
-                $(".form-group").addClass("has-error");
 
+        if (err && err.xhr.status === 500) {
+            $(".form-group").addClass("has-error");
+            window.alert("Some of the information you have put in is in the wrong format or missing")
 
-            }else{
+        }else if (err) {
+            console.log("Something went wrong")
 
-                window.alert("Event created!");
-                window.location.href = "../Html/Events.html";
+        }else{
 
-            }
+            window.alert("Event created!");
+            window.location.href = "Events.html";
 
-
+        }
 
         });
 
+        });
 
-    });
+        $("#return-button").click(() => {
 
-    $("#return-button").click(() => {
-
-        window.location.href = "Events.html";
-    });
-});
+            window.location.href = "Events.html";
+        });
+        });

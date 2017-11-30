@@ -5,19 +5,24 @@ $(document).ready(() => {
     $("#SignUp").click(() => {
 
 
-
+        const password = $("#inputPassword").val();
         const firstName = $("#inputFirstName").val();
         const lastName = $("#inputLastName").val();
-        const password = $("#inputPassword").val();
         const email = $("#inputEmail").val();
         const gender = $("#inputGender").val();
+        const description = $("#inputDescription").val();
         const major = $("#inputMajor").val();
         const semester = $("#inputSemester").val();
-        const description = $("#inputDescription").val();
 
-        SDK.User.createUser(password, firstName, lastName, email, description, gender, major, semester, (err, data) => {
-            if (err && err.xhr.status === 401) {
+
+        SDK.User.createUser(password, firstName, lastName, email, description, gender, major, semester, (err) => {
+            if (err && err.xhr.status === 500) {
                 $(".form-group").addClass("has-error");
+                window.alert("Some of the information you have put in is in the wrong format or missing")
+
+            }else if (err) {
+                console.log("Something went wrong")
+
             }else{
 
                 window.alert("Your user is now created. You will now be able to login!");
