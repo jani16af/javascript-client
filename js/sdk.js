@@ -214,7 +214,7 @@ const SDK = {
                     title: title,
                     startDate: startDate,
                     endDate: endDate,
-                    description: description,
+                    description: description
                 },
                 url: "/events",
                 method: "POST",

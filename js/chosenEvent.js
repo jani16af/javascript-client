@@ -1,5 +1,14 @@
 $(document).ready(() => {
 
+    SDK.User.loadNav()
+
+    $("#return-buttonTop").click(function () {
+
+
+        window.location.href = "Events.html";
+
+    });
+
     const $specificEvent = $("#specificEvent-list");
     const $PostList = $("#post-list");
 
@@ -49,7 +58,7 @@ $(document).ready(() => {
                 
                 <div class="panel-footer" align="RIGHT">
                     <div class="row">
-                            <button class="btn btn-default thisPost-button" id="thisPost-button" data-post-comments="${eventPosts.id}" >Comment</button>
+                            <button class="btn btn-default thisPost-button" id="thisPost-button" data-post-comments="${eventPosts.id}" >Comment on the post</button>
                     </div>
                 </div>
             </div>
@@ -58,13 +67,19 @@ $(document).ready(() => {
             $PostList.append(postsHtml);
         });
 
+        SDK.Storage.remove("postOwnerId");
+
         $(".thisPost-button").click(function () {
             $("#comment-modal").modal("toggle");
             const postId = $(this).data("post-comments");
             SDK.Storage.persist("chosenPostId", postId);
-            refresh();
+
+
 
         });
+
+
+
 
         //});
     });

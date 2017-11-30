@@ -7,7 +7,7 @@ $(document).ready(() => {
         const title = $("#inputTitle").val();
         const startDate = $("#inputStartDate").val();
         const endDate = $("#inputEndDate").val();
-        const description = $("#inputEventDescription").val();
+        const description = $("#inputDescription").val();
         const owner_id = SDK.User.current();
 
         SDK.Event.createEvent(owner_id, title, startDate, endDate, description, (err) => {
@@ -15,9 +15,6 @@ $(document).ready(() => {
         if (err && err.xhr.status === 500) {
             $(".form-group").addClass("has-error");
             window.alert("Some of the information you have put in is in the wrong format or missing")
-
-        }else if (err) {
-            console.log("Something went wrong")
 
         }else{
 
