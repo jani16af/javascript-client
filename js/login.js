@@ -2,6 +2,8 @@ $(document).ready(() => {
 
 SDK.User.loadNav();
 
+
+
 $("#login-button").click(() => {
 
     const email = $("#inputEmail").val();
@@ -20,21 +22,19 @@ $("#login-button").click(() => {
 
 
         } else {
-            SDK.Event.fineMineEvents((err) => {
-                if (err) console.log('error', err);
-
 
                 window.location.href = "../Html/HomePage.html";
-
-            });
         }
 
-        $("#Register-button").click(() => {
-
-            window.location.href = "../Html/SignUp.html";
 });
 
 
 });
+
+
 });
+
+$("#Register-button").click(() => {
+
+    window.location.href = "../Html/SignUp.html";
 });

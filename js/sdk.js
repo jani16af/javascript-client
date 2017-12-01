@@ -244,18 +244,34 @@ const SDK = {
             }, cb)
         },
 
-        fineMineEvents: (cb, userId) => {
+        subscribeEvent: (user_id, event_id, cb) => {
             SDK.request({
-                data:{
-                  userId: userId,
+                data: {
+                  user_id: user_id,
+                  event_id: event_id
                 },
-                url: "/events/" + SDK.User.current() + "/subscribe",
+                url: "/events/subscribe",
+                method: "POST",
+                headers: {
+                    Authorization: "Bearer " + SDK.Storage.load("token")
+                },
+            }, cb)
+        },
+
+        findMyEvents: (cb, user_id) => {
+            SDK.request({
+                data: {
+                    user_id: user_id,
+                },
+                url: "/events/attend",
                 method: "GET",
                 headers: {
                     Authorization: "Bearer " + SDK.Storage.load("token")
                 },
             }, cb)
 }
+
+
     },
 
 

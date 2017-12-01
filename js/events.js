@@ -4,7 +4,10 @@ $(document).ready(() => {
 
 
     SDK.User.loadNav();
+
     const $eventList = $("#event-list");
+
+
 
 
     SDK.Event.findAllEvents((err, events) => {
@@ -36,7 +39,7 @@ $(document).ready(() => {
                 <div class="panel-footer">
                     <div class="row">
                             <button class="btn btn-default more-details" data-event-id="${event.id}">More Details</button>
-                            <button class="btn btn-default attend" data-event-id="${event.id}">Attend this event</button>
+                            <button class="btn btn-default attendEvent" data-event-id="${event.id}">Attend this event</button>
                     </div>
                    
                 </div>
@@ -45,6 +48,27 @@ $(document).ready(() => {
         </div>`;
 
             $eventList.append(eventHtml);
+        });
+
+
+        $(".attendEvent").click(function () {
+
+            const user_id = SDK.Storage.load("userId");
+            const event_id = $(this).data("event-id");
+
+            SDK.Event.subscribeEvent(user_id, event_id, (err) => {
+                if (err && err.xhr.status === 500) {
+                    $(".form-group").addClass("has-error");
+                    window.alert("Some of the information you have put in is in the wrong format or missing")
+
+                }else{
+
+                    window.alert("You are now attending this event!");
+                    window.location.href = "Events.html";
+
+                }
+            });
+
         });
 
 

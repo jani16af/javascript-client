@@ -2,6 +2,28 @@ $(document).ready(() => {
 
     SDK.User.loadNav()
 
+    const user_id = SDK.Storage.load("userId");
+    const event_id = SDK.Storage.load("chosenEventId");
+
+
+    $("#attendEvent-button").click(function () {
+
+        SDK.Event.subscribeEvent(user_id, event_id, (err) => {
+            if (err && err.xhr.status === 500) {
+                $(".form-group").addClass("has-error");
+                window.alert("Some of the information you have put in is in the wrong format or missing")
+
+            }else{
+
+                window.alert("You are now attending this event!");
+                window.location.href = "Events.html";
+
+            }
+        });
+
+    });
+
+
     $("#return-buttonTop").click(function () {
 
 

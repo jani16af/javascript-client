@@ -1,36 +1,49 @@
 $(document).ready(() => {
 
-  SDK.User.loadNav();
-  const currentUser = SDK.User.current();
-  const $myeventlist = $("#my-events-list");
+    SDK.User.loadNav();
+    /*const currentUser = SDK.User.current();
+    const user_id = SDK.Storage.load("userId");
+    const event_id = SDK.Storage.load("chosenEventId")*/
+    const $myEventList = $("#my-events-list");
+    const $emptyList = $("#Nothing-in-my-events-list");
+
+    /*$emptyList.hide();
+
+    /*SDK.Event.findMyEvents((events, err) => {
 
 
-  SDK.Event.fineMineEvents((err, Event) => {
-    if(err) throw err;
-    orders.forEach(order => {
-      $basketTbody.append(`
-        <tr>
-            <td>${order.id}</td>
-            <td>${parseOrderItems(order.orderItems)}</td>
-            <td>kr. ${sumTotal(order.orderItems)}</td>
-        </tr>
-      `);
-    });
-  });
+        events.forEach((event) => {
+            const eventHtml = `
+        <div class="col-lg-6 book-container">
+            <div class="panel panel-default">
+            
+                <div class="panel-heading">
+                    <h3 class="panel-title">${event.title}</h3>
+                </div>
+                
+                <div class="panel-body">
+                    <div class="col-md-1-8">
+                      <dl>
+                      <dt>Created</dt>
+                      <dd>${event.created}</dd>
+                        <dt>Start date</dt>
+                        <dd>${event.startDate}</dd>
+                        <dt>End date</dt>
+                        <dd>${event.endDate}</dd>
+                        <dt>Description</dt>
+                        <dd>${event.description}</dd>
+                      </dl>
+                    </div>
+                </div>
+                
+                
+            </div>
+            
+        </div>`;
 
-  function parseOrderItems(items){
-    return items.map(item => {
-      return item.count + " x " + item.bookInfo.title
-    }).join(", ");
-  }
-
-  function sumTotal(items){
-    let total = 0;
-    items.forEach(item => {
-      total += item.count * item.bookInfo.price
-    });
-    return total;
-  }
+            $myEventList.append(eventHtml);
+        });
 
 
+    });*/
 });

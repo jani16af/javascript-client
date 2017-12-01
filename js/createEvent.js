@@ -27,6 +27,8 @@ $(document).ready(() => {
 
         });
 
+
+
         $("#return-button").click(() => {
 
             window.location.href = "Events.html";
