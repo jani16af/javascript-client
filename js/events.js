@@ -59,7 +59,7 @@ $(document).ready(() => {
             SDK.Event.subscribeEvent(user_id, event_id, (err) => {
                 if (err && err.xhr.status === 500) {
                     $(".form-group").addClass("has-error");
-                    window.alert("Some of the information you have put in is in the wrong format or missing")
+                    window.alert("You are already attending this event")
 
                 }else{
 

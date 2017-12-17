@@ -250,7 +250,7 @@ const SDK = {
                   user_id: user_id,
                   event_id: event_id
                 },
-                url: "/events/subscribe",
+                url: "/users/subscribe",
                 method: "POST",
                 headers: {
                     Authorization: "Bearer " + SDK.Storage.load("token")
@@ -258,17 +258,17 @@ const SDK = {
             }, cb)
         },
 
-        findMyEvents: (cb, user_id) => {
+        findMyEvents: (cb) => {
             SDK.request({
-                data: {
-                    user_id: user_id,
-                },
-                url: "/events/attend",
+                url: "/users/" + SDK.Storage.load("userId") + "/attend",
                 method: "GET",
                 headers: {
-                    Authorization: "Bearer " + SDK.Storage.load("token")
+                    Authorization: "Bearer " + SDK.Storage.load("token"),
+                    filter: {
+                        include: ["events"]
+                    }
                 },
-            }, cb)
+            }, cb);
 }
 
 
@@ -299,32 +299,7 @@ const SDK = {
 
             },
 
-        encrypt: (encrypt) => {
-            if (encrypt !== undefined && encrypt.length !== 0) {
-                const key = ['L', 'O', 'L'];
-                let isEncrypted = "";
-                for (let i = 0; i < encrypt.length; i++) {
-                    isEncrypted += (String.fromCharCode((encrypt.charAt(i)).charCodeAt(0) ^ (key[i % key.length]).charCodeAt(0)))
-                }
-                return isEncrypted;
-            } else {
-                return encrypt;
-            }
-        },
 
-        decrypt:
-            (decrypt) => {
-                if (decrypt !== undefined && decrypt.length !== 0) {
-                    const key = ['L', 'O', 'L'];
-                    let isDecrypted = "";
-                    for (let i = 0; i < decrypt.length; i++) {
-                        isDecrypted += (String.fromCharCode((decrypt.charAt(i)).charCodeAt(0) ^ (key[i % key.length]).charCodeAt(0)))
-                    }
-                    return isDecrypted;
-                } else {
-                    return decrypt;
-                }
-            }
 
 };
 

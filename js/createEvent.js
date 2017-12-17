@@ -16,6 +16,10 @@ $(document).ready(() => {
             $(".form-group").addClass("has-error");
             window.alert("Some of the information you have put in is in the wrong format or missing")
 
+        }else if (err && err.xhr.status === 400) {
+            $(".form-group").addClass("has-error");
+            window.alert("The time you have entered is before the time to date.")
+
         }else{
 
             window.alert("Event created!");

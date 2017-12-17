@@ -1,15 +1,22 @@
 $(document).ready(() => {
 
     SDK.User.loadNav();
-    /*const currentUser = SDK.User.current();
+
+    const currentUser = SDK.User.current();
     const user_id = SDK.Storage.load("userId");
-    const event_id = SDK.Storage.load("chosenEventId")*/
     const $myEventList = $("#my-events-list");
     const $emptyList = $("#Nothing-in-my-events-list");
 
-    /*$emptyList.hide();
+    $emptyList.hide();
 
-    /*SDK.Event.findMyEvents((events, err) => {
+    SDK.Event.findMyEvents((events, err) => {
+
+        events = JSON.parse(events);
+
+        if (events.length === 0){
+
+            $emptyList.show();
+        }
 
 
         events.forEach((event) => {
@@ -45,5 +52,5 @@ $(document).ready(() => {
         });
 
 
-    });*/
+    });
 });
