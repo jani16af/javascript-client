@@ -258,18 +258,6 @@ const SDK = {
             }, cb)
         },
 
-        findMyEvents: (cb) => {
-            SDK.request({
-                url: "/users/" + SDK.Storage.load("userId") + "/attend",
-                method: "GET",
-                headers: {
-                    Authorization: "Bearer " + SDK.Storage.load("token"),
-                    filter: {
-                        include: ["events"]
-                    }
-                },
-            }, cb);
-}
 
 
     },

@@ -37,6 +37,7 @@ $(document).ready(() => {
 
     SDK.Event.findEvent((err, event) => {
 
+
         const specificEventHtml = `
 
  <div class="page-header">
