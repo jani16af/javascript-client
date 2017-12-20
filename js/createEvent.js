@@ -1,6 +1,14 @@
 $(document).ready(() => {
 
+    //Her hentes metoden i sdk'en under User, loadNav, som viser navbaren, som ligger i nav.html.
+
     SDK.User.loadNav();
+
+    /*Ved klik på createEvent knappen fyres nedstående funktion.
+    Denne funktion tager de værdier brugeren har indtastet og opretter dem
+    som konstanter. Disse konstanter kan herefter indsættes i SDK metoden
+    createEvent.
+     */
 
     $("#createEvent-button").click(() => {
 
@@ -9,6 +17,8 @@ $(document).ready(() => {
         const endDate = $("#inputEndDate").val();
         const description = $("#inputDescription").val();
         const owner_id = SDK.User.current();
+
+        //Her køres metoden createEvent. Denne metode opretter et nyt event, hvis der ikke opstår en fejl.
 
         SDK.Event.createEvent(owner_id, title, startDate, endDate, description, (err) => {
 

@@ -1,4 +1,10 @@
+//Nedenfor bliver der oprettet en konstant af SDK, hvilket gør at det er muligt at kalde metoderne fra andre .js sider.
+
 const SDK = {
+
+    //Opretter forbindelse til Serverens API og gør det muligt at kalde de tilhørende funktioner.
+    //Nedstpende kode fra linje 8-34 er taget fra DISbook, som er udleveret af øvelseslæren Jesper.
+
     serverURL: "http://localhost:8080/api",
     request: (options, cb) => { //Vigtigste funktioner, der laver en AJAX request. Kan sende et request, asynkront.
 
@@ -27,13 +33,19 @@ const SDK = {
 
     },
 
-
+    //Her foretages alle server kaldende som omhandler brugeren.
     User: {
 
         myInfo: (cb) => {
             SDK.request({
+                    //Her defineres metoden GET, da informationer skal hentes.
                     method: "GET",
+                    //Her tilgås userEndpointet på serveren.
+
                     url: "/users",
+                    /*Nedenfor defineres headeren, som sendes til API'et. Uden denne vil brugeren ikke kunne tilgå
+                    den pågældende metode.
+                     */
                     headers: {
                         Authorization: "Bearer " + SDK.Storage.load("token")
                     }
@@ -94,6 +106,9 @@ const SDK = {
         current: () => {
             return SDK.Storage.load("userId");
         },
+
+        //Ved logout fjernes alt der ligger i localstorage, og brugeren sendes til login siden.
+
         logOut: () => {
             SDK.Storage.remove("token");
             SDK.Storage.remove("userId");
@@ -118,7 +133,7 @@ const SDK = {
             }, (err, data) => {
                 if (err) return cb(err);
 
-                // https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript
+                // Nedenstående kode er hentet fra https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript
                 let token = data;
 
                 var base64Url = token.split('.')[0];
@@ -133,6 +148,8 @@ const SDK = {
 
             }, cb);
         },
+
+        //loadNav er taget fra DISbook, som er udleveret af øvelseslæren Jesper.
 
         loadNav: (cb) => {
             $("#nav-container").load("nav.html", () => {
@@ -160,6 +177,8 @@ const SDK = {
             })
         },
     },
+
+    //Her foretages alle server kaldende som omhandler posts.
 
     Post: {
 
@@ -206,6 +225,8 @@ const SDK = {
 
     },
 
+    //Her foretages alle server kaldende som omhandler events.
+
     Event: {
         createEvent: (owner_id, title, startDate, endDate, description, cb) => {
             SDK.request({
@@ -247,8 +268,8 @@ const SDK = {
         subscribeEvent: (user_id, event_id, cb) => {
             SDK.request({
                 data: {
-                  user_id: user_id,
-                  event_id: event_id
+                    user_id: user_id,
+                    event_id: event_id
                 },
                 url: "/users/subscribe",
                 method: "POST",
@@ -259,34 +280,35 @@ const SDK = {
         },
 
 
-
     },
 
 
+    //Disse metoder gør det muligt at gemme informationer i localstorage, så de kan bruges senere.
+    //Metoderne er tage fra DISbook, udleveret af øvelseslærer Jesper.
 
-        Storage:
-            {
-                prefix: "NexusSDK",
-                persist:
-                    (key, value) => {
-                        window.localStorage.setItem(SDK.Storage.prefix + key, (typeof value === 'object') ? JSON.stringify(value) : value)
-                    },
-                load:
-                    (key) => {
-                        const val = window.localStorage.getItem(SDK.Storage.prefix + key);
-                        try {
-                            return JSON.parse(val);
-                        }
-                        catch (e) {
-                            return val;
-                        }
-                    },
-                remove: (key) => {
-                    window.localStorage.removeItem(SDK.Storage.prefix + key);
-                }
 
-            },
+    Storage:
+        {
+            prefix: "NexusSDK",
+            persist:
+                (key, value) => {
+                    window.localStorage.setItem(SDK.Storage.prefix + key, (typeof value === 'object') ? JSON.stringify(value) : value)
+                },
+            load:
+                (key) => {
+                    const val = window.localStorage.getItem(SDK.Storage.prefix + key);
+                    try {
+                        return JSON.parse(val);
+                    }
+                    catch (e) {
+                        return val;
+                    }
+                },
+            remove: (key) => {
+                window.localStorage.removeItem(SDK.Storage.prefix + key);
+            }
 
+        },
 
 
 };
