@@ -6,14 +6,17 @@ $(document).ready(() => {
     const event_id = SDK.Storage.load("chosenEventId");
 
 
+
+
     $("#attendEvent-button").click(function () {
+        if (SDK.User.current()) {
 
         SDK.Event.subscribeEvent(user_id, event_id, (err) => {
             if (err && err.xhr.status === 500) {
                 $(".form-group").addClass("has-error");
                 window.alert("You are already attending this event")
 
-            }else{
+            } else {
 
                 window.alert("You are now attending this event!");
                 window.location.href = "Events.html";
@@ -21,8 +24,11 @@ $(document).ready(() => {
             }
         });
 
-    });
+    }else{
+        window.alert("Please login to attend event")
+    }
 
+    });
 
     $("#return-buttonTop").click(function () {
 
@@ -104,7 +110,7 @@ $(document).ready(() => {
 
 
 
-        //});
+
     });
 
 
@@ -116,6 +122,11 @@ $(document).ready(() => {
 
         SDK.Post.createPost(ownerId, content, eventId, (err, data) => {
 
+            if (err && err.xhr.status === 500) {
+                $(".form-group").addClass("has-error");
+                window.alert("Please login to post")
+
+            }
 
         });
 
@@ -174,6 +185,11 @@ $(document).ready(() => {
 
         SDK.Post.createComment(ownerId, content, parentId, (err, data) => {
 
+            if (err && err.xhr.status === 500) {
+                $(".form-group").addClass("has-error");
+                window.alert("Please login to create comment")
+
+            }
 
         });
 

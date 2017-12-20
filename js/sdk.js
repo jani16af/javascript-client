@@ -143,7 +143,7 @@ const SDK = {
 
                 if (currentUser) {
                     $(".navbar-right").html(`
-            <li><a href="Index.html" id="logout-link">Log out</a></li>
+            <li><a href="#" id="logout-link">Log out</a></li>
           `);
                 } else {
                     $(".navbar-right").html(`

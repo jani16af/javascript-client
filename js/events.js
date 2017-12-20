@@ -52,11 +52,13 @@ $(document).ready(() => {
 
 
         $(".attendEvent").click(function () {
+            if(SDK.User.current()){
 
             const user_id = SDK.Storage.load("userId");
             const event_id = $(this).data("event-id");
 
             SDK.Event.subscribeEvent(user_id, event_id, (err) => {
+
                 if (err && err.xhr.status === 500) {
                     $(".form-group").addClass("has-error");
                     window.alert("You are already attending this event")
@@ -67,9 +69,13 @@ $(document).ready(() => {
                     window.location.href = "Events.html";
 
                 }
-            });
+                });
 
-        });
+        }else{
+            window.alert("Please login to attend event")
+        }
+
+    });
 
 
         $(".more-details").click(function () {
